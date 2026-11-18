@@ -19,12 +19,12 @@ export const CHAPTER_VIEWS: View[] = [
 
 /** Chapter views for the lunar showcase (habitat + astronaut). */
 export const CONTEXT_VIEWS: View[] = [
-  V(28, 13, 15, [1.2, 1.3, 0.6]),   // 01 problem — wide, dusty
-  V(18, 22, 8.5, [-0.4, 2.8, -0.2]), // 02 principle — roof radiator film
+  V(24, 13, 21, [-1.5, 1.6, 1.5]),    // 01 problem — wide, dusty
+  V(14, 24, 9, [-2.7, 3.6, 0]),       // 02 principle — roof radiator film
   V(58, 12, 10.5, [0.6, 1.0, 0]),
   V(72, 24, 9.5, [2.2, 0.4, 0]),
-  V(30, 24, 9.5, [-0.4, 2.4, -0.2]), // 05 transport
-  V(-24, 10, 7.2, [3.6, 1.0, 2.2]),  // 06 astronaut
+  V(26, 26, 10, [-2.7, 3.4, 0]),      // 05 transport
+  V(20, 8, 8, [2.4, 1.2, 5.0]),       // 06 astronaut
   V(36, 28, 11.5, [0.3, 0.6, 0]),
   V(52, 20, 9.5, [0.6, 0.6, 0]),
 ];

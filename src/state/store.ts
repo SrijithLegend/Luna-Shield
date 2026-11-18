@@ -54,6 +54,7 @@ export interface ViewState {
   camNonce: number;
   /** true = lunar habitat + astronaut showcase; false = detailed layer model */
   context: boolean;
+  sceneError: string | null;
 }
 
 interface Actions {
@@ -75,7 +76,7 @@ export const initial: SimState & ViewState = {
   energized: true, dustOn: true,
   page: 'overview', chapter: 0, selected: null, hidden: [], isolated: null,
   explode: 0, thickExag: true, labels: true, cutaway: false, host: 'radiator', animMode: 'assembly',
-  presentation: false, cinematic: false, reducedMotion: prefersReduced, tourStep: null, resetKey: 0, failureView: false, camNonce: 0, context: true,
+  presentation: false, cinematic: false, reducedMotion: prefersReduced, tourStep: null, resetKey: 0, failureView: false, camNonce: 0, context: true, sceneError: null,
 };
 
 export const useStore = create<SimState & ViewState & Actions>((set, get) => ({

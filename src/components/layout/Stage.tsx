@@ -20,10 +20,11 @@ export function hasWebGL() {
   } catch { return false; }
 }
 
-class Boundary extends Component<{ children: ReactNode }, { err: boolean }> {
-  state = { err: false };
-  static getDerivedStateFromError() { return { err: true }; }
-  render() { return this.state.err ? <StaticFallback reason="The 3D scene failed to start." /> : this.props.children; }
+class Boundary extends Component<{ children: ReactNode }, { err: string | null }> {
+  state = { err: null as string | null };
+  static getDerivedStateFromError(e: Error) { return { err: e?.message ?? 'unknown error' }; }
+  componentDidCatch(e: Error) { console.error('[LunaShield 3D]', e); useStore.setState({ sceneError: e?.message ?? 'unknown error' }); }
+  render() { return this.state.err ? <StaticFallback reason={`The 3D scene failed to start (${this.state.err}).`} /> : this.props.children; }
 }
 
 export function Canvas3D() {
@@ -48,7 +49,7 @@ function Hero() {
   return (
     <Overlay className="left-8 top-8 max-w-xl">
       <p className="lbl text-cyan">Concept visualization</p>
-      <h1 className="mt-1 text-6xl font-black tracking-[0.12em] text-text md:text-7xl">LUNASHIELD</h1>
+      <h1 className="mt-1 text-5xl font-black tracking-[0.1em] text-text xl:text-6xl">LUNASHIELD</h1>
       <p className="mt-1 text-xl font-light text-text/90">Flexible Electrodynamic Dust Shield</p>
       <p className="mt-3 max-w-md text-[15px] leading-relaxed text-mute">An active surface-integrated approach to moving dust away from critical lunar hardware.</p>
       <div className="mt-5 flex gap-3">
@@ -217,11 +218,12 @@ export function TourBar() {
 /** Persistent 3D stage with page-specific overlays. */
 export function Stage() {
   const cinematic = useStore((s) => s.cinematic);
+  const failed = useStore((s) => s.sceneError) !== null || !hasWebGL();
   return (
     <div className="relative h-full w-full bg-ink">
       <Canvas3D />
       {cinematic && <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-10 bg-gradient-to-b from-black to-transparent" />}
-      <Panels />
+      {!failed && <Panels />}
       <div className="pointer-events-none absolute bottom-1 right-3 z-10 text-[11.5px] text-mute/70">Concept visualization · particle trajectories illustrative</div>
     </div>
   );

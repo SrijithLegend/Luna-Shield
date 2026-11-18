@@ -181,6 +181,12 @@ function Terrain() {
   );
 }
 
+function GlowDriver() {
+  const phaseMode = useStore((s) => s.phaseMode);
+  useGlow(false, phaseMode, phaseOffsetsDeg(phaseMode).length);
+  return null;
+}
+
 /** Lunar showcase: habitat with roof radiator + solar array, and an astronaut, all carrying (illustrative) LunaShield film. */
 export function ContextScene() {
   const mats = useMemo(() => makeMaterials('radiator'), []);
@@ -190,7 +196,6 @@ export function ContextScene() {
   const ex = useRef(0);
   const clock = useRef({ t: 0 });
   const lastReset = useRef(useStore.getState().resetKey);
-  const phaseMode = useStore((s) => s.phaseMode);
 
   useFrame((_, dtRaw) => {
     const s = useStore.getState();
@@ -198,8 +203,6 @@ export function ContextScene() {
     if (s.resetKey !== lastReset.current) { lastReset.current = s.resetKey; clock.current.t = 0; }
     if (s.playing) clock.current.t += dt * s.speed;
   });
-  useGlow(false, phaseMode, phaseOffsetsDeg(phaseMode).length);
-
   const ctx = useMemo<SceneCtx>(() => ({ cfg: 'professional', layout, mats, k: 0, ex, clock, interactive: true }), [layout, mats]);
 
   return (
@@ -215,6 +218,7 @@ export function ContextScene() {
       <Stars radius={120} depth={40} count={3500} factor={4} fade={false} speed={0} />
       {/* Earth, for context */}
       <mesh position={[30, 26, -80]}><sphereGeometry args={[5, 32, 24]} /><meshStandardMaterial color="#2c6bb0" emissive="#123a66" emissiveIntensity={0.9} roughness={0.8} /></mesh>
+      <GlowDriver />
       <Terrain />
       <Habitat radiator={radiator} solar={solar} />
       <Astronaut />

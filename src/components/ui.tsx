@@ -24,9 +24,9 @@ export const CostBadge = ({ status }: { status: CostStatus }) => <span className
 
 export function Section({ title, children, right }: { title: string; children: ReactNode; right?: ReactNode }) {
   return (
-    <section className="mb-8">
-      <div className="mb-3 flex items-end justify-between gap-3 border-b border-line pb-2">
-        <h2 className="text-lg font-semibold tracking-tight">{title}</h2>{right}
+    <section className="bento mb-4">
+      <div className="mb-4 flex items-end justify-between gap-3">
+        <h2 className="display text-[24px]">{title}</h2>{right}
       </div>
       {children}
     </section>

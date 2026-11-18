@@ -7,7 +7,7 @@ import type { MaterialInfo } from '../data/types';
 
 function MaterialCard({ m, thickness }: { m: MaterialInfo; thickness?: string }) {
   return (
-    <article className="card space-y-2 p-4 text-[15px]">
+    <article className="bento space-y-2 p-4 text-[15px]">
       <header>
         <h3 className="text-[17px] font-semibold leading-tight">{m.name}</h3>
         <p className="text-mute">{m.family}</p>

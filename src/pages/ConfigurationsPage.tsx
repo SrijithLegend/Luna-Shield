@@ -31,7 +31,7 @@ export default function ConfigurationsPage() {
       <div className="mb-3"><PlayBar /></div>
       <div className="grid gap-4 md:grid-cols-2">
         {(['professional', 'demonstrator'] as const).map((c) => (
-          <div key={c} className="card overflow-hidden">
+          <div key={c} className="bento overflow-hidden">
             <div className="h-80 bg-ink">
               {ok ? <Suspense fallback={<div className="grid h-full place-items-center text-sm text-mute">Loading…</div>}><Mini cfg={c} /></Suspense> : <StaticFallback reason="WebGL unavailable." />}
             </div>

@@ -97,7 +97,7 @@ export function BomCalculator() {
         <label className="flex items-center gap-2"><input type="checkbox" checked={adapter} onChange={(e) => setAdapter(e.target.checked)} />I need to buy a 12 V adapter</label>
         <button className="btn !py-1" onClick={() => setInputs({})}>Reset to planning defaults</button>
       </div>
-      <details className="card mt-4 p-3 text-[15px]" open>
+      <details className="bento mt-4 p-3 text-[15px]" open>
         <summary className="cursor-pointer font-semibold">Assumptions</summary>
         <ul className="mt-2 list-disc space-y-1.5 pl-5">{COST_ASSUMPTIONS.map((a) => <li key={a}>{a}</li>)}</ul>
       </details>
@@ -109,19 +109,19 @@ export function BusinessCase() {
   return (
     <Section title="Business case (market assumptions)">
       <div className="grid gap-3 md:grid-cols-2">
-        <div className="card p-5 text-[15px]">
+        <div className="bento p-5 text-[15px]">
           <p className="lbl mb-1">Proposed customer surfaces <Tag tag="ASSUMPTION" /></p>
           <ul className="list-disc space-y-1.5 pl-5"><li>Thermal radiators</li><li>Optical windows and camera covers</li><li>Solar-array surfaces</li></ul>
         </div>
-        <div className="card p-5 text-[15px]">
+        <div className="bento p-5 text-[15px]">
           <p className="lbl mb-1">Integration model <Tag tag="ASSUMPTION" /></p>
           <p>Flexible film retrofit or integrated at build, plus driver electronics and a mission interface. Final stack and drive scheme chosen per host surface and mission.</p>
         </div>
-        <div className="card p-5 text-[15px]">
+        <div className="bento p-5 text-[15px]">
           <p className="lbl mb-1">Terrestrial solar-panel cleaning as a bridge market <Tag tag="UNVERIFIED" /></p>
           <p>A hypothesis only. No market sizing or customer evidence is represented here.</p>
         </div>
-        <div className="card p-5 text-[15px]">
+        <div className="bento p-5 text-[15px]">
           <p className="lbl mb-1">Differentiation <Tag tag="FOUNDER ESTIMATE" /></p>
           <p>EDS is not a LunaShield invention, and flexible EDS research already exists. The proposed differentiation — a durable, manufacturable, integrator-ready flexible system — is a development thesis, not a proven moat. No customer revenue or supplier quotes are represented.</p>
         </div>

@@ -13,7 +13,7 @@ export function Protocol() {
       <Notice tone="red">Any HV step must be performed only by a qualified supervisor using enclosed, current-limited equipment, rated probes, interlocks and a documented discharge procedure. This checklist gives no HV wiring instructions.</Notice>
       <ol className="space-y-2">
         {PROTOCOL.map((p, i) => (
-          <li key={p} className="card flex items-start gap-3 p-3 text-[15px]">
+          <li key={p} className="bento flex items-start gap-3 p-3 text-[15px]">
             <input id={`pr-${i}`} type="checkbox" checked={done[i]} onChange={(e) => setDone(done.map((d, j) => (j === i ? e.target.checked : d)))} className="mt-1" />
             <label htmlFor={`pr-${i}`}><span className="mr-2 text-mute">{i + 1}.</span>{p}</label>
           </li>
@@ -51,7 +51,7 @@ export default function ValidationPage() {
             {ROADMAP.map((s) => (
               <li key={s.id} className="relative">
                 <span className="absolute -left-[31px] top-1 grid h-4 w-4 place-items-center rounded-full border border-amber bg-ink text-[8px] text-amber" aria-hidden>●</span>
-                <div className="card p-5">
+                <div className="bento p-5">
                   <div className="flex items-center gap-2"><span className="badge b-amber">Stage {s.id}</span><span className="badge b-mute">not started</span></div>
                   <h3 className="mt-1 text-[15px] font-semibold">{s.title}</h3>
                   <ul className="mt-1 list-disc space-y-1 pl-5 text-[15px]">{s.items.map((i) => <li key={i}>{i}</li>)}</ul>

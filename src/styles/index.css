@@ -11,12 +11,13 @@
   --color-amber: #f59e0b;
   --color-green: #34d399;
   --color-red: #f87171;
-  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans: "Switzer", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 html, body, #root { height: 100%; }
 body { margin: 0; background: var(--color-ink); color: var(--color-text); font-family: var(--font-sans); overflow: hidden; -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.6; letter-spacing: 0.005em; }
-h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; }
+h1, h2, h3 { line-height: 1.1; letter-spacing: -0.03em; font-weight: 700; }
+.display { font-weight: 800; letter-spacing: -0.045em; line-height: 0.95; }
 p, li { max-width: 72ch; }
 td, th { line-height: 1.5; }
 button { font: inherit; color: inherit; }

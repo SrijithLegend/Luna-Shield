@@ -40,22 +40,22 @@ export function SimControls() {
   const modes = data.phaseModes;
   const hz = s.freq;
   return (
-    <div className="space-y-3 text-sm">
+    <div className="space-y-4 text-sm">
       <ConfigSwitch />
       <PlayBar />
       <Field label={`Frequency — ${hz} Hz (illustrative)`} hint="Changes animation timing only. 10 Hz is an initial target, not a settled optimum.">
         <input type="range" min={1} max={30} step={1} value={hz} onChange={(e) => s.set({ freq: +e.target.value })} aria-label="Frequency" />
       </Field>
-      <p className="text-[11px] text-mute">Period {periodMs(hz).toFixed(1)} ms · {s.phaseMode === 3 ? `phase spacing ≈ ${phaseSpacingMs(hz, 3).toFixed(1)} ms` : 'no phase-shifted travel in this mode'}</p>
+      <p className="text-[12.5px] text-mute">Period {periodMs(hz).toFixed(1)} ms · {s.phaseMode === 3 ? `phase spacing ≈ ${phaseSpacingMs(hz, 3).toFixed(1)} ms` : 'no phase-shifted travel in this mode'}</p>
       <Field label="Phase mode" hint="Conceptual only. 1-phase and 2-phase are non-travelling patterns; only 3-phase shows a propagating field pattern. Blue Ghost: glass EDS two-phase, radiator EDS one-phase — this 3-phase view is not a Blue Ghost replica.">
         <Seg label="Phase mode" value={s.phaseMode} onChange={(v) => s.set({ phaseMode: v })}
           options={([1, 2, 3] as const).map((v) => ({ v, l: `${v}-phase` })).filter((o) => modes.includes(o.v))} />
       </Field>
-      {s.config === 'demonstrator' && <p className="text-[11px] text-mute">Demonstrator is shown with a conceptual 3-phase A/B/C sequence only if the electrical architecture supports it (to be verified).</p>}
+      {s.config === 'demonstrator' && <p className="text-[12.5px] text-mute">Demonstrator is shown with a conceptual 3-phase A/B/C sequence only if the electrical architecture supports it (to be verified).</p>}
       <Field label={`Illustrative field intensity — ${Math.round(s.voltage * 100)}%`} hint="Display parameter — not a validated field solver. Not a kV/mm value.">
         <input type="range" min={0} max={1} step={0.01} value={s.voltage} onChange={(e) => s.set({ voltage: +e.target.value })} aria-label="Illustrative field intensity" />
       </Field>
-      <p className="text-[11px] text-amber">display parameter — not a validated field solver</p>
+      <p className="text-[12.5px] text-amber">display parameter — not a validated field solver</p>
       <Field label="Dust loading"><Seg label="Dust loading" value={s.loading} onChange={(v) => s.set({ loading: v })} options={[{ v: 'low', l: 'Low' }, { v: 'medium', l: 'Med' }, { v: 'high', l: 'High' }]} /></Field>
       <Field label="Particle size"><Seg label="Particle size" value={s.psize} onChange={(v) => s.set({ psize: v })} options={[{ v: 'small', l: 'Small' }, { v: 'medium', l: 'Med' }, { v: 'large', l: 'Large' }]} /></Field>
       <Field label="Particle response (conceptual response model)" hint="Charged: moves with charge sign. Polarizable: weaker hop transport. Mixed: illustrative population.">
@@ -73,8 +73,8 @@ export function SimControls() {
         <Toggle on={s.explode > 0.5} onChange={(v) => s.set({ explode: v ? 1 : 0 })} label="Exploded" />
         <Toggle on={s.labels} onChange={(v) => s.set({ labels: v })} label="Labels" />
       </div>
-      <p className="text-[11px] text-mute"><Remaining /></p>
-      <p className="text-[11px] text-mute">Field lines are a visualization overlay — the electric field cannot be seen directly.</p>
+      <p className="text-[12.5px] text-mute"><Remaining /></p>
+      <p className="text-[12.5px] text-mute">Field lines are a visualization overlay — the electric field cannot be seen directly.</p>
       <SimNotice />
     </div>
   );

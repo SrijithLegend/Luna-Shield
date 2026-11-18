@@ -22,7 +22,7 @@ export function ModePicker() {
       <p className="lbl mb-1">Animation mode</p>
       <div className="grid grid-cols-2 gap-1.5">
         {MODES.map((m) => (
-          <button key={m.v} title={m.d} onClick={() => apply(m.v)} aria-pressed={mode === m.v} className={`btn !justify-center !px-2 !py-1.5 text-[12px] ${mode === m.v ? 'btn-on' : ''}`}>{m.l}</button>
+          <button key={m.v} title={m.d} onClick={() => apply(m.v)} aria-pressed={mode === m.v} className={`btn !justify-center !px-2 !py-1.5 text-[13.5px] ${mode === m.v ? 'btn-on' : ''}`}>{m.l}</button>
         ))}
       </div>
     </div>
@@ -32,7 +32,7 @@ export function ModePicker() {
 export function ExplodeControls() {
   const s = useStore();
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <Field label={`Assembled ↔ Exploded — ${Math.round(s.explode * 100)}%`}>
         <input type="range" min={0} max={1} step={0.01} value={s.explode} onChange={(e) => s.set({ explode: +e.target.value })} aria-label="Exploded view amount" />
       </Field>
@@ -41,13 +41,13 @@ export function ExplodeControls() {
         <button className="btn justify-center" onClick={() => s.set({ explode: 0, isolated: null, hidden: [] })}>Reassemble</button>
       </div>
       <Toggle on={s.thickExag} onChange={(v) => s.set({ thickExag: v })} label="Thickness exaggerated" hint="The real film is very thin. When ON, layer thickness is drawn greatly exaggerated and is not to scale." />
-      <p className="text-[11px] text-mute">{s.thickExag ? 'Layer thickness greatly exaggerated for visibility — not to scale.' : 'Thickness drawn closer to scale; layers are hard to distinguish when assembled.'}</p>
+      <p className="text-[12.5px] text-mute">{s.thickExag ? 'Layer thickness greatly exaggerated for visibility — not to scale.' : 'Thickness drawn closer to scale; layers are hard to distinguish when assembled.'}</p>
       <div className="grid grid-cols-2 gap-2">
         <Toggle on={s.cutaway} onChange={(v) => s.set({ cutaway: v })} label="Cutaway" hint="Clips the front half of the model to show the cross-section." />
         <Toggle on={s.labels} onChange={(v) => s.set({ labels: v })} label="Labels" />
       </div>
       <button className="btn w-full justify-center" onClick={() => s.set({ camNonce: s.camNonce + 1 })}><Eye size={14} />Reset camera view</button>
-      {s.cutaway && <p className="flex items-center gap-1 text-[11px] text-mute"><Scissors size={12} />Cutaway clips the z &gt; 0 half.</p>}
+      {s.cutaway && <p className="flex items-center gap-1 text-[12.5px] text-mute"><Scissors size={12} />Cutaway clips the z &gt; 0 half.</p>}
       {s.config === 'professional' && <HostPicker />}
     </div>
   );

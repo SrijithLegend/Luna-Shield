@@ -14,7 +14,7 @@ const TRACK = 40;
 const HIST = 10;
 const STATE_TEXT = ['resting on surface', 'airborne (illustrative)', 'left active area', 'landed beyond edge'];
 
-export function Particles() {
+export function Particles({ countScale = 1, sizeScale = 1, leave = false }: { countScale?: number; sizeScale?: number; leave?: boolean } = {}) {
   const { cfg, layout, k, ex, clock, interactive } = useScene();
   const { dim, topY, topIndex } = layout;
   const loading = useStore((s) => s.loading);
@@ -25,7 +25,7 @@ export function Particles() {
   const resetKey = useStore((s) => s.resetKey);
   const select = useStore((s) => s.select);
   const uniform = cfg === 'demonstrator';
-  const count = COUNTS[loading];
+  const count = Math.max(20, Math.round(COUNTS[loading] * countScale));
 
   const sim = useMemo(() => new ParticleSim(count, 1337, dim.halfW, dim.halfD, uniform), [count, dim.halfW, dim.halfD, uniform]);
   const mesh = useRef<THREE.InstancedMesh>(null);
@@ -61,12 +61,12 @@ export function Particles() {
       for (let i = 0; i < sub; i++) {
         sim.step(dt / sub, t - dt + (dt * (i + 1)) / sub, {
           mode: cfg === 'demonstrator' ? 3 : s.phaseMode, hz: s.freq, voltage: s.voltage,
-          response: s.response, idealized: s.idealized, reimpact: s.reimpact, halfW: dim.halfW, pitch: dim.pitch, floorDrop: topY,
+          response: s.response, idealized: s.idealized, reimpact: leave ? false : s.reimpact, halfW: dim.halfW, pitch: dim.pitch, floorDrop: topY,
         }, s.energized);
       }
     }
     if (group.current) group.current.position.y = ex.current * layout.parts[Object.keys(layout.parts).find((id) => layout.parts[id].stackIndex === topIndex)!].ex[1];
-    const r0 = SIZES[psize];
+    const r0 = SIZES[psize] * sizeScale;
     for (let i = 0; i < sim.n; i++) {
       const st = sim.state[i];
       const r = r0 * sim.sizeMul[i];
@@ -85,7 +85,7 @@ export function Particles() {
     m.visible = dustOn;
 
     frame.current++;
-    if (frame.current % 12 === 0 && interactive) simStats.remaining = sim.remaining(dim.halfW);
+    if (frame.current % 12 === 0 && interactive && countScale === 1) simStats.remaining = sim.remaining(dim.halfW);
 
     // trails: ring buffer sampled each frame the clock moves
     if (trails && dt > 0) {

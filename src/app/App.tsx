@@ -46,7 +46,7 @@ export default function App() {
         ) : (
           <div className="h-full overflow-y-auto scroll-thin">
             <Suspense fallback={<div className="p-8 text-mute">Loading…</div>}><PageBody page={page} /></Suspense>
-            <footer className="mx-auto max-w-7xl px-6 pb-8 text-[11px] text-mute">Concept visualization — not a flight-qualified product. Visualization is qualitative. Particle trajectories are illustrative and are not experimental measurements.</footer>
+            <footer className="mx-auto max-w-7xl px-6 pb-8 text-[12.5px] text-mute">Concept visualization — not a flight-qualified product. Visualization is qualitative. Particle trajectories are illustrative and are not experimental measurements.</footer>
           </div>
         )}
         <TourBar />

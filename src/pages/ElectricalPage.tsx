@@ -17,7 +17,7 @@ export default function ElectricalPage() {
       {tab === 'professional' ? (
         <>
           <Section title="Conceptual targets from the current deck">
-            <table className="w-full text-[13px]"><tbody>
+            <table className="w-full text-[15px]"><tbody>
               {d.keyFacts.map((k) => (
                 <tr key={k.label} className="border-b border-line"><td className="w-56 py-2 pr-3 text-mute">{k.label}</td><td className="py-2">{k.value}</td><td className="py-2 text-right"><Tag tag={k.tag} /></td></tr>
               ))}

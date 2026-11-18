@@ -19,7 +19,7 @@ export function InfoPanel() {
   const layer = selected ? CONFIGS[config].layers.find((l) => l.id === selected) : undefined;
   if (!layer) {
     return (
-      <div className="card p-4 text-sm text-mute">
+      <div className="card p-5 text-sm text-mute">
         <p className="lbl mb-1">Component inspector</p>
         Select a layer or component in the 3D scene, a label, or the list to see its function, candidate material, trade-offs, risks, confidence level and cost basis.
       </div>
@@ -27,12 +27,12 @@ export function InfoPanel() {
   }
   const m = MATERIALS[layer.materialId];
   return (
-    <div className="card max-h-full space-y-3 overflow-y-auto p-4 text-[13px] scroll-thin" aria-live="polite">
+    <div className="card max-h-full space-y-4 overflow-y-auto p-4 text-[15px] scroll-thin" aria-live="polite">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-start gap-3">
           <div className="h-10 w-10 shrink-0 rounded border border-line" style={{ background: swatch[layer.kind] }} title={`Rendered appearance: ${m.appearance}`} />
           <div>
-            <h3 className="text-[15px] font-semibold leading-tight">{layer.name}</h3>
+            <h3 className="text-[17px] font-semibold leading-tight">{layer.name}</h3>
             <p className="text-mute">{m.family}</p>
           </div>
         </div>
@@ -59,12 +59,12 @@ export function InfoPanel() {
 }
 
 const Row = ({ k, v }: { k: string; v: React.ReactNode }) => (
-  <div><p className="lbl">{k}</p><p className="mt-0.5 leading-snug">{v}</p></div>
+  <div><p className="lbl">{k}</p><p className="mt-0.5 leading-relaxed">{v}</p></div>
 );
 const List = ({ k, items, tone }: { k: string; items: string[]; tone?: 'red' }) => (
   <div>
     <p className="lbl">{k}</p>
-    <ul className="mt-0.5 list-disc space-y-0.5 pl-4 leading-snug">{items.map((i) => <li key={i} className={tone === 'red' ? 'text-[#f3b0b0]' : ''}>{i}</li>)}</ul>
+    <ul className="mt-0.5 list-disc space-y-1 pl-4 leading-relaxed">{items.map((i) => <li key={i} className={tone === 'red' ? 'text-[#f3b0b0]' : ''}>{i}</li>)}</ul>
   </div>
 );
 
@@ -78,7 +78,7 @@ export function ComponentList() {
         {CONFIGS[config].layers.map((l, i) => (
           <li key={l.id}>
             <button onClick={() => select(selected === l.id ? null : l.id)} aria-pressed={selected === l.id}
-              className={`flex w-full items-center gap-2 rounded px-2 py-1 text-left text-[12.5px] hover:bg-panel2 ${selected === l.id ? 'bg-cyan/10 text-cyan' : ''} ${hidden.includes(l.id) ? 'opacity-40' : ''}`}>
+              className={`flex w-full items-center gap-2 rounded px-2 py-1 text-left text-[14px] hover:bg-panel2 ${selected === l.id ? 'bg-cyan/10 text-cyan' : ''} ${hidden.includes(l.id) ? 'opacity-40' : ''}`}>
               <span className="w-4 text-mute">{i + 1}</span>{l.name}
             </button>
           </li>

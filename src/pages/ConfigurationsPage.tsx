@@ -35,13 +35,13 @@ export default function ConfigurationsPage() {
             <div className="h-80 bg-ink">
               {ok ? <Suspense fallback={<div className="grid h-full place-items-center text-sm text-mute">Loading…</div>}><Mini cfg={c} /></Suspense> : <StaticFallback reason="WebGL unavailable." />}
             </div>
-            <div className="p-3"><h2 className="text-lg font-semibold">{CONFIGS[c].name}</h2><p className="text-[13px] text-mute">{CONFIGS[c].tagline}</p></div>
+            <div className="p-3"><h2 className="text-lg font-semibold">{CONFIGS[c].name}</h2><p className="text-[15px] text-mute">{CONFIGS[c].tagline}</p></div>
           </div>
         ))}
       </div>
       <p className="mt-2"><SimNotice /></p>
       <div className="mt-6 overflow-x-auto">
-        <table className="w-full min-w-[720px] border-collapse text-[13px]">
+        <table className="w-full min-w-[720px] border-collapse text-[15px]">
           <caption className="sr-only">Comparison of Professional and Demonstrator configurations</caption>
           <thead><tr className="text-left"><th className="w-40 border-b border-line py-2 text-mute" /><th className="border-b border-line py-2">Professional LunaShield</th><th className="border-b border-line py-2">Demonstrator</th></tr></thead>
           <tbody>

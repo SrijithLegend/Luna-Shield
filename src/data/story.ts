@@ -8,21 +8,21 @@ const base: Patch = { failureView: false, selected: null, hidden: [], isolated: 
 
 export const CHAPTERS: Chapter[] = [
   { n: '01', title: 'The problem', text: 'Lunar dust can contaminate exposed hardware such as radiators, optical windows, camera covers and solar surfaces. Here a protected surface is shown carrying an illustrative dust load.',
-    patch: { ...base, config: 'professional', explode: 0, energized: false, dustOn: true, loading: 'high', fieldLines: false, trails: false, curvature: 'flat' } },
+    patch: { ...base, context: true, config: 'professional', explode: 0, energized: false, dustOn: true, loading: 'high', fieldLines: false, trails: false, curvature: 'flat' } },
   { n: '02', title: 'The principle', text: 'Patterned electrodes driven with time-shifted waveforms make an electric field that varies across the surface and in time. NASA demonstrated EDS on the Moon in March 2025; this three-phase view is a conceptual illustration, not a Blue Ghost replica.',
-    patch: { ...base, config: 'professional', explode: 0, energized: true, dustOn: false, fieldLines: true, phaseMode: 3, curvature: 'flat' } },
+    patch: { ...base, context: true, config: 'professional', explode: 0, energized: true, dustOn: false, fieldLines: true, phaseMode: 3, curvature: 'flat' } },
   { n: '03', title: 'The flexible stack', text: 'A proposed layer stack: dielectric encapsulation, copper electrodes, polyimide substrate, bonding layer, host. Thickness is greatly exaggerated; select any layer to inspect it.',
-    patch: { ...base, config: 'professional', explode: 1, energized: false, dustOn: false, fieldLines: false, labels: true, curvature: 'flat' } },
+    patch: { ...base, context: false, config: 'professional', explode: 1, energized: false, dustOn: false, fieldLines: false, labels: true, curvature: 'flat' } },
   { n: '04', title: 'The power system', text: 'Concept chain: spacecraft bus → protection → HV conversion → waveform and phase control → electrode array. A converter alone does not create a controlled multi-phase waveform. Architecture is TBD.',
-    patch: { ...base, config: 'professional', explode: 0.55, energized: true, dustOn: false, fieldLines: false, curvature: 'flat' } },
+    patch: { ...base, context: false, config: 'professional', explode: 0.55, energized: true, dustOn: false, fieldLines: false, curvature: 'flat' } },
   { n: '05', title: 'Dust transport', text: 'Particles hop and translate in response to the travelling pattern. Behaviour varies with charge, size and adhesion; some stay attached. This is an illustrative model, not a measurement.',
-    patch: { ...base, config: 'professional', explode: 0, energized: true, dustOn: true, loading: 'medium', trails: true, fieldLines: true, phaseMode: 3, curvature: 'flat', animMode: 'transport' } },
+    patch: { ...base, context: true, config: 'professional', explode: 0, energized: true, dustOn: true, loading: 'medium', trails: true, fieldLines: true, phaseMode: 3, curvature: 'flat', animMode: 'transport' } },
   { n: '06', title: 'Professional system', text: 'Proposed flexible, large-area film for radiators, optical covers and solar surfaces, plus HV driver and controller. A development concept — no validated professional unit exists.',
-    patch: { ...base, config: 'professional', explode: 0.25, energized: true, dustOn: true, loading: 'low', trails: false, curvature: 'mild' } },
+    patch: { ...base, context: true, config: 'professional', explode: 0.25, energized: true, dustOn: true, loading: 'low', trails: false, curvature: 'mild' } },
   { n: '07', title: 'Demonstrator', text: 'A small benchtop coupon to show the principle and directional particle transport. Not lunar regolith, not vacuum, not a flight product. HV modules are UNVERIFIED CANDIDATES.',
-    patch: { ...base, config: 'demonstrator', explode: 0.2, energized: true, dustOn: true, loading: 'medium', trails: false, curvature: 'flat', fieldLines: true } },
+    patch: { ...base, context: false, config: 'demonstrator', explode: 0.2, energized: true, dustOn: true, loading: 'medium', trails: false, curvature: 'flat', fieldLines: true } },
   { n: '08', title: 'What must be proven', text: 'Copper cracking, dielectric breakdown, delamination and adhesive failure are annotated risk scenarios, not measured predictions. Each needs bench, environmental and host-integration testing.',
-    patch: { ...base, config: 'professional', explode: 0.6, energized: false, dustOn: false, fieldLines: false, failureView: true, animMode: 'failure', curvature: 'flat' } },
+    patch: { ...base, context: false, config: 'professional', explode: 0.6, energized: false, dustOn: false, fieldLines: false, failureView: true, animMode: 'failure', curvature: 'flat' } },
 ];
 
 export function applyChapter(i: number) {

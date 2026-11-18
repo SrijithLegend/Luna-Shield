@@ -74,9 +74,9 @@ function Panel({ title, img, roi, thr, bright, edits, onEdit, onArea }: { title:
       <div className="flex min-h-40 items-center justify-center rounded border border-line bg-black">
         {img ? <canvas ref={cv} className="max-h-72 w-full object-contain" style={{ cursor: brush ? 'crosshair' : 'default', touchAction: 'none' }} role="img" aria-label={`${title} segmentation overlay`}
           onPointerDown={(e) => { drawing.current = true; (e.target as Element).setPointerCapture(e.pointerId); paint(e); }} onPointerMove={paint} onPointerUp={() => { drawing.current = false; }} />
-          : <span className="p-6 text-[12px] text-mute">No image</span>}
+          : <span className="p-6 text-[13.5px] text-mute">No image</span>}
       </div>
-      <div className="mt-1 flex gap-1 text-[11px]">
+      <div className="mt-1 flex gap-1 text-[12.5px]">
         <span className="lbl mr-1 self-center">Manual correction</span>
         {([[0, 'Off'], [1, 'Add particle'], [2, 'Erase']] as const).map(([v, l]) => <button key={v} className={`btn !px-2 !py-0.5 ${brush === v ? 'btn-on' : ''}`} onClick={() => setBrush(v)}>{l}</button>)}
       </div>
@@ -131,26 +131,26 @@ export function ImageAnalysis() {
   ].join('\n'));
 
   const rangeP = (k: 'x' | 'y' | 'w' | 'h', max: number) => (
-    <label className="block text-[11px]"><span className="lbl">ROI {k.toUpperCase()} — {rp[k]}%</span><input type="range" min={k === 'w' || k === 'h' ? 5 : 0} max={max} value={rp[k]} onChange={(e) => setRp({ ...rp, [k]: +e.target.value })} /></label>
+    <label className="block text-[12.5px]"><span className="lbl">ROI {k.toUpperCase()} — {rp[k]}%</span><input type="range" min={k === 'w' || k === 'h' ? 5 : 0} max={max} value={rp[k]} onChange={(e) => setRp({ ...rp, [k]: +e.target.value })} /></label>
   );
 
   return (
-    <div className="space-y-4 text-[13px]">
+    <div className="space-y-4 text-[15px]">
       <Notice>Image thresholding is <b>not</b> a mass measurement. It can be biased by lighting, shadows and particle overlap. Use fixed camera and fixed lighting. Nothing is pre-populated.</Notice>
       <div className="grid gap-3 md:grid-cols-2">
-        <label className="card block p-3"><span className="lbl">Before image (initial coverage)</span><input type="file" accept="image/*" onChange={pick(setBefore)} className="mt-1 block w-full text-[12px]" /></label>
-        <label className="card block p-3"><span className="lbl">After image (final coverage)</span><input type="file" accept="image/*" onChange={pick(setAfter)} className="mt-1 block w-full text-[12px]" /></label>
+        <label className="card block p-3"><span className="lbl">Before image (initial coverage)</span><input type="file" accept="image/*" onChange={pick(setBefore)} className="mt-1 block w-full text-[13.5px]" /></label>
+        <label className="card block p-3"><span className="lbl">After image (final coverage)</span><input type="file" accept="image/*" onChange={pick(setAfter)} className="mt-1 block w-full text-[13.5px]" /></label>
       </div>
       {sizeMismatch && <Notice tone="red">The two images have different dimensions. Use identical framing so the same ROI covers the same region.</Notice>}
       <div className="card grid gap-3 p-3 md:grid-cols-6">
         {rangeP('x', 95)}{rangeP('y', 95)}{rangeP('w', 100)}{rangeP('h', 100)}
-        <label className="block text-[11px]"><span className="lbl">Threshold — {thr ?? `auto (Otsu ${auto ?? '–'})`}</span><input type="range" min={0} max={255} value={thr ?? auto ?? 128} onChange={(e) => setThr(+e.target.value)} /></label>
-        <div className="flex flex-col gap-1 text-[11px]">
+        <label className="block text-[12.5px]"><span className="lbl">Threshold — {thr ?? `auto (Otsu ${auto ?? '–'})`}</span><input type="range" min={0} max={255} value={thr ?? auto ?? 128} onChange={(e) => setThr(+e.target.value)} /></label>
+        <div className="flex flex-col gap-1 text-[12.5px]">
           <label className="flex items-center gap-1"><input type="checkbox" checked={bright} onChange={(e) => setBright(e.target.checked)} />Particles brighter</label>
           <button className="btn !py-0.5" onClick={() => setThr(null)}>Auto threshold</button>
         </div>
       </div>
-      <p className="text-[11px] text-mute">Brightness/contrast is normalised identically inside the ROI of each image (1st–99th percentile stretch) before the same threshold is applied.</p>
+      <p className="text-[12.5px] text-mute">Brightness/contrast is normalised identically inside the ROI of each image (1st–99th percentile stretch) before the same threshold is applied.</p>
       <div className="grid gap-3 md:grid-cols-2">
         <Panel title="Before — mask overlay (cyan = particle)" img={before} roi={roi} thr={thr} bright={bright} edits={editsB} onEdit={edit(editsB)} onArea={onB} />
         <Panel title="After — mask overlay (cyan = particle)" img={after} roi={roi} thr={thr} bright={bright} edits={editsA} onEdit={edit(editsA)} onArea={onA as never} />
@@ -175,7 +175,7 @@ export function ImageAnalysis() {
         <button className="btn justify-center" disabled={!trials.length} onClick={report}>Export trial report</button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[640px] text-[12.5px]">
+        <table className="w-full min-w-[640px] text-[14px]">
           <caption className="mb-1 text-left text-mute">Trial record {mean !== null && `— mean η (energized, n=${energized.length}) ${mean.toFixed(1)}%${sd !== null ? ` ± ${sd.toFixed(1)}` : ''}`}{energized.length > 0 && energized.length < 5 && ' — fewer than 5 energized trials: not repeatability-grade'}</caption>
           <thead><tr className="text-left text-mute"><th>#</th><th>Label</th><th>Control</th><th>A_i</th><th>A_r</th><th>η %</th><th>RH</th><th>T °C</th><th>t (s)</th><th>P (W)</th><th /></tr></thead>
           <tbody>

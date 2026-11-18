@@ -35,11 +35,11 @@ export function Section({ title, children, right }: { title: string; children: R
 
 export function Notice({ tone = 'amber', children }: { tone?: 'amber' | 'red' | 'cyan'; children: ReactNode }) {
   const c = tone === 'red' ? 'border-red/50 bg-red/5 text-red' : tone === 'cyan' ? 'border-cyan/40 bg-cyan/5 text-cyan' : 'border-amber/50 bg-amber/5 text-amber';
-  return <div className={`rounded-md border px-3 py-2 text-[12.5px] leading-snug ${c}`}>{children}</div>;
+  return <div className={`rounded-md border px-3 py-2 text-[14px] leading-relaxed ${c}`}>{children}</div>;
 }
 
 export const SimNotice = () => (
-  <p className="pointer-events-none text-[10.5px] leading-snug text-mute" role="note">{SIM_NOTICE}</p>
+  <p className="pointer-events-none text-[12px] leading-relaxed text-mute" role="note">{SIM_NOTICE}</p>
 );
 
 /** Text-equivalent helper for charts / measurements. */
@@ -67,7 +67,7 @@ export function Seg<T extends string | number>({ value, options, onChange, label
 export function Toggle({ on, onChange, label, hint, disabled }: { on: boolean; onChange: (v: boolean) => void; label: string; hint?: string; disabled?: boolean }) {
   return (
     <button type="button" role="switch" aria-checked={on} title={hint} disabled={disabled} onClick={() => onChange(!on)} className={`btn w-full justify-between !py-1 ${on ? 'btn-on' : ''}`}>
-      <span>{label}</span><span className="text-[10px] opacity-70">{on ? 'ON' : 'OFF'}</span>
+      <span>{label}</span><span className="text-[11.5px] opacity-70">{on ? 'ON' : 'OFF'}</span>
     </button>
   );
 }

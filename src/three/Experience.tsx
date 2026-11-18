@@ -5,8 +5,9 @@ import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import type CameraControlsImpl from 'camera-controls';
 import type { ConfigId } from '../data';
 import { useStore } from '../state/store';
-import { CHAPTER_VIEWS, PAGE_VIEWS, viewToPose } from './camera';
+import { CHAPTER_VIEWS, CONTEXT_VIEWS, PAGE_VIEWS, viewToPose } from './camera';
 import { Scene } from './Scene';
+import { ContextScene } from './Context';
 
 function CameraRig() {
   const ref = useRef<CameraControlsImpl>(null);
@@ -14,6 +15,7 @@ function CameraRig() {
   const chapter = useStore((s) => s.chapter);
   const cfg = useStore((s) => s.config);
   const nonce = useStore((s) => s.camNonce);
+  const ctxMode = useStore((s) => s.context);
   const reduced = useStore((s) => s.reducedMotion);
   const cinematic = useStore((s) => s.cinematic);
   const touched = useRef(false);
@@ -21,11 +23,11 @@ function CameraRig() {
   useEffect(() => {
     const c = ref.current;
     if (!c) return;
-    const view = page === 'overview' || page === 'principle' ? (page === 'overview' ? CHAPTER_VIEWS[chapter] ?? PAGE_VIEWS.overview : PAGE_VIEWS.principle) : PAGE_VIEWS[page];
-    const { pos, target } = viewToPose(view, cfg);
+    const view = page === 'overview' || page === 'principle' ? (page === 'overview' ? (ctxMode ? CONTEXT_VIEWS : CHAPTER_VIEWS)[chapter] ?? PAGE_VIEWS.overview : PAGE_VIEWS.principle) : PAGE_VIEWS[page];
+    const { pos, target } = viewToPose(view, page === 'overview' && ctxMode ? 'professional' : cfg);
     touched.current = false;
     void c.setLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], !reduced);
-  }, [page, chapter, cfg, nonce, reduced]);
+  }, [page, chapter, cfg, nonce, reduced, ctxMode]);
 
   // gentle cinematic drift; stops as soon as the user interacts (never spin while inspecting)
   useEffect(() => {
@@ -43,7 +45,7 @@ function CameraRig() {
     return () => cancelAnimationFrame(raf);
   }, [cinematic, reduced]);
 
-  return <CameraControls ref={ref} makeDefault minDistance={2.5} maxDistance={26} smoothTime={0.35} draggingSmoothTime={0.12} maxPolarAngle={Math.PI * 0.52} />;
+  return <CameraControls ref={ref} makeDefault minDistance={2.5} maxDistance={40} smoothTime={0.35} draggingSmoothTime={0.12} maxPolarAngle={Math.PI * 0.52} />;
 }
 
 function Post() {
@@ -56,13 +58,20 @@ function Post() {
   );
 }
 
+function MainScene() {
+  const cfg = useStore((s) => s.config);
+  const page = useStore((s) => s.page);
+  const ctx = useStore((s) => s.context);
+  return page === 'overview' && ctx ? <ContextScene /> : <Scene cfg={cfg} />;
+}
+
 /** Main interactive 3D view. */
 export default function Experience() {
   const cfg = useStore((s) => s.config);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ fov: 32, near: 0.1, far: 80, position: [7, 4, 9] }} gl={{ antialias: true, powerPreference: 'high-performance' }} aria-label="Interactive 3D model of the LunaShield assembly. Use the component list for keyboard access.">
       <Suspense fallback={null}>
-        <Scene cfg={cfg} />
+        <MainScene />
         <CameraRig />
         <Post />
       </Suspense>

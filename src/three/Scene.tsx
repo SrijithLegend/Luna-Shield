@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { ContactShadows, Environment, Lightformer } from '@react-three/drei';
+import { ContactShadows, Environment, Lightformer, Stars } from '@react-three/drei';
 import * as THREE from 'three';
 import type { ConfigId } from '../data';
 import { useStore } from '../state/store';
@@ -49,6 +49,7 @@ export function Scene({ cfg, interactive = true }: { cfg: ConfigId; interactive?
     <Ctx.Provider value={ctx}>
       <color attach="background" args={['#05070a']} />
       <fog attach="fog" args={['#05070a', 16, 34]} />
+      <Stars radius={60} depth={30} count={1500} factor={3} fade speed={0} />
       <ambientLight intensity={0.25} />
       <directionalLight position={[5, 9, 6]} intensity={2.2} color="#fff3e6" castShadow shadow-mapSize={[1024, 1024]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-bias={-0.0004} />
       <directionalLight position={[-6, 3, -5]} intensity={1.6} color="#22d3ee" />
@@ -67,7 +68,7 @@ export function Scene({ cfg, interactive = true }: { cfg: ConfigId; interactive?
       <ContactShadows position={[0, -0.02, 0]} opacity={0.55} scale={18} blur={2.4} far={5} resolution={512} frames={interactive ? Infinity : 1} />
       <mesh rotation-x={-Math.PI / 2} position={[0, -0.04, 0]} receiveShadow>
         <circleGeometry args={[9, 64]} />
-        <meshStandardMaterial color="#0a0d12" roughness={0.9} metalness={0.2} />
+        <meshStandardMaterial color="#2e2d2b" roughness={1} metalness={0} />
       </mesh>
       <mesh rotation-x={-Math.PI / 2} position={[0, -0.035, 0]}>
         <ringGeometry args={[8.9, 9, 96]} />

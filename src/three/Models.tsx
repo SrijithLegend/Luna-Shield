@@ -8,38 +8,43 @@ import { bendXY } from './layout';
 import { useStore } from '../state/store';
 import { groupDrive, phaseOffsetsDeg } from '../utils/physics';
 
-/** Electrode strips, grouped A/B/C. Each group shares a material that glows with its (illustrative) drive level. */
-function Electrodes() {
-  const { layout, mats, k, clock } = useScene();
-  const { dim, parts } = layout;
-  const p = parts.electrodes;
-  const phaseMode = useStore((s) => s.phaseMode);
-  const cfgPhase = useScene().cfg === 'demonstrator' ? 3 : phaseMode;
-  const selected = useStore((s) => s.selected === 'electrodes');
+/** Animate the shared per-group copper materials: glow follows the (illustrative) drive of each A/B/C group. */
+export function useGlow(selected: boolean, phase: 1 | 2 | 3, nGroups: number) {
+  const { mats, clock } = useScene();
   const energized = useStore((s) => s.energized);
   const freq = useStore((s) => s.freq);
   const voltage = useStore((s) => s.voltage);
-  const failure = useStore((s) => s.failureView);
-  const anim = useStore((s) => s.animMode);
-  const n = Math.floor((dim.halfW * 2) / dim.pitch);
-  const nGroups = phaseOffsetsDeg(cfgPhase).length;
-  const xs = useMemo(() => Array.from({ length: n }, (_, i) => -dim.halfW + dim.pitch * (i + 0.5)), [n, dim]);
-
   useFrame(() => {
     for (let g = 0; g < 3; g++) {
       const m = mats.copper[g];
       m.userData.noHL = true;
       if (g >= nGroups) { m.emissiveIntensity = 0; continue; }
       let e = selected ? 0.25 : 0;
+      const d = groupDrive(g, phase, freq, clock.current.t);
       if (energized) {
-        const d = groupDrive(g, cfgPhase as 1 | 2 | 3, freq, clock.current.t);
-        // positive half = cyan glow, negative half = faint; amplitude is an illustrative display parameter
-        e = Math.max(e, (d > 0 ? d : d * 0.12 * -1) * (0.25 + voltage * 1.5));
-      }
+        e = Math.max(e, (d > 0 ? d : -d * 0.12) * (0.25 + voltage * 1.5));
+        m.emissive.set(d >= 0 ? '#22d3ee' : '#3b5bdb');
+      } else m.emissive.set('#22d3ee');
       m.emissiveIntensity = e;
-      m.emissive.set(energized ? (groupDrive(g, cfgPhase as 1 | 2 | 3, freq, clock.current.t) >= 0 ? '#22d3ee' : '#3b5bdb') : '#22d3ee');
     }
   });
+}
+
+/** Electrode strips, grouped A/B/C. Each group shares a material that glows with its (illustrative) drive level. */
+function Electrodes() {
+  const { layout, mats, k } = useScene();
+  const { dim, parts } = layout;
+  const p = parts.electrodes;
+  const phaseMode = useStore((s) => s.phaseMode);
+  const cfgPhase = useScene().cfg === 'demonstrator' ? 3 : phaseMode;
+  const selected = useStore((s) => s.selected === 'electrodes');
+  const failure = useStore((s) => s.failureView);
+  const anim = useStore((s) => s.animMode);
+  const n = Math.floor((dim.halfW * 2) / dim.pitch);
+  const nGroups = phaseOffsetsDeg(cfgPhase).length;
+  const xs = useMemo(() => Array.from({ length: n }, (_, i) => -dim.halfW + dim.pitch * (i + 0.5)), [n, dim]);
+
+  useGlow(selected, cfgPhase as 1 | 2 | 3, nGroups);
 
   const crackIdx = Math.floor(n * 0.62);
   return (

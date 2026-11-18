@@ -27,8 +27,8 @@ export function Nav() {
       <nav aria-label="Primary" className="scroll-thin flex min-w-0 flex-1 gap-0.5 overflow-x-auto">
         {PAGES.map((p, i) => (
           <button key={p.id} onClick={() => go(p.id)} aria-current={page === p.id ? 'page' : undefined}
-            className={`whitespace-nowrap rounded px-2.5 py-1.5 text-[14px] transition-colors ${page === p.id ? 'bg-cyan/10 text-cyan' : 'text-mute hover:text-text'}`}>
-            <span className="mr-1 opacity-50">{String(i + 1).padStart(2, '0')}</span>{p.label}
+            className={`whitespace-nowrap rounded px-2 py-1.5 text-[13.5px] transition-colors ${page === p.id ? 'bg-cyan/10 text-cyan' : 'text-mute hover:text-text'}`}>
+            <span className="mr-1 hidden opacity-50 2xl:inline">{String(i + 1).padStart(2, '0')}</span>{p.label}
           </button>
         ))}
       </nav>

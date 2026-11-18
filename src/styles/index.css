@@ -67,3 +67,13 @@ input[type="number"], input[type="text"], select {
 
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
 .reduced * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+
+/* bento tiles */
+.bento {
+  background: linear-gradient(180deg, rgba(18, 24, 31, 0.92), rgba(11, 15, 20, 0.92));
+  border: 1px solid var(--color-line); border-radius: 20px; padding: 22px; overflow: hidden auto;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+.bento::-webkit-scrollbar { width: 8px; }
+.bento::-webkit-scrollbar-thumb { background: #243140; border-radius: 4px; }
+.card { border-radius: 16px; }
